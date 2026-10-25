@@ -104,7 +104,7 @@
         <a href="#" class="flex items-center space-x-3 group">
           <!-- Monogram Gold Crest using exact logo image -->
           <div class="relative w-12 h-14 flex-shrink-0 flex items-center justify-center p-0.5 rounded-lg overflow-hidden group-hover:scale-105 transition duration-300">
-            <img id="navLogoImg" src="1001209763.jpg" alt="Yash Cultural Academy Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" onerror="this.onerror=null; this.src='1001210309.png';">
+            <img id="navLogoImg" src="logo.png" alt="Yash Cultural Academy Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
           </div>
           <div>
             <span class="block font-serif text-lg sm:text-xl font-bold tracking-wider text-gold-gradient uppercase leading-none">
@@ -270,10 +270,9 @@
                 <span>ESTD 2023</span>
               </div>
 
-              <!-- Main Exact Logo Image from User's File -->
+              <!-- Main Exact Logo Image from Server -->
               <div class="relative mx-auto w-full max-w-[320px] rounded-2xl overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.9)] border border-brand-gold/30 group">
-                <img id="heroLogoImg" src="1001209763.jpg" alt="Yash Cultural Academy Official Logo" class="w-full h-auto object-cover transform group-hover:scale-102 transition duration-500" onerror="this.onerror=null; this.src='1001210309.png';">
-                
+                <img id="heroLogoImg" src="logo.png" alt="Yash Cultural Academy Official Logo" class="w-full h-auto object-cover transform group-hover:scale-102 transition duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
               </div>
 
@@ -286,15 +285,6 @@
                   </span>
                   <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-brand-gold"></div>
                 </div>
-              </div>
-
-              <!-- Option to upload or replace image on device if saved under another name -->
-              <div class="pt-1 flex flex-col gap-2">
-                <label for="customLogoInput" class="w-full py-2 px-3 rounded-xl bg-brand-slate hover:bg-brand-gold hover:text-black text-brand-gold border border-brand-gold/30 text-xs font-serif font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer">
-                  <i data-lucide="image" class="w-4 h-4"></i>
-                  <span>Upload / Switch Logo File</span>
-                </label>
-                <input type="file" id="customLogoInput" accept="image/*" class="hidden" onchange="loadUserLogoFile(event)">
               </div>
 
               <!-- Interactive Audio Sample Teaser -->
@@ -468,7 +458,6 @@
           <div class="h-48 relative overflow-hidden bg-gradient-to-br from-[#2b2413] via-[#1a1725] to-[#0f1118] flex items-center justify-center p-6">
             <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:16px_16px]"></div>
             <div class="w-24 h-24 rounded-full bg-brand-slate/90 border border-brand-gold/40 flex items-center justify-center text-brand-gold group-hover:scale-110 transition duration-300 shadow-xl">
-              <!-- Custom Violin Icon Outline -->
               <svg viewBox="0 0 24 24" class="w-12 h-12 stroke-current fill-none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 3l-4 4"/>
                 <path d="M14 7l2 2"/>
@@ -1014,11 +1003,9 @@
         
         <!-- Brand column -->
         <div class="lg:col-span-2 space-y-4">
-        <!-- Brand column in Footer -->
-        <div class="lg:col-span-2 space-y-4">
           <div class="flex items-center space-x-3">
             <div class="w-12 h-14 flex-shrink-0 flex items-center justify-center p-0.5 rounded-lg overflow-hidden">
-              <img id="footerLogoImg" src="1001209763.jpg" alt="Yash Cultural Academy Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='1001210309.png';">
+              <img id="footerLogoImg" src="logo.png" alt="Yash Cultural Academy Logo" class="w-full h-full object-contain">
             </div>
             <div>
               <span class="block font-serif text-lg font-bold text-gold-gradient uppercase leading-tight">Yash Cultural Academy</span>
@@ -1244,9 +1231,8 @@
         return;
       }
 
-      // Generate a rich Carnatic Sa-Pa-Sa (C# / Shruti 1.5) Tanpura harmonic drone
-      const baseFreq = 138.59; // C#3
-      const freqs = [baseFreq, baseFreq * 1.5, baseFreq * 2, baseFreq * 0.75]; // Sa, Pa, Higher Sa, Lower Pa
+      const baseFreq = 138.59;
+      const freqs = [baseFreq, baseFreq * 1.5, baseFreq * 2, baseFreq * 0.75];
 
       freqs.forEach((f, idx) => {
         const osc = audioCtx.createOscillator();
@@ -1254,7 +1240,6 @@
         osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
         osc.frequency.setValueAtTime(f, audioCtx.currentTime);
 
-        // LFO for gentle Indian gamaka vibrato
         const lfo = audioCtx.createOscillator();
         lfo.frequency.setValueAtTime(4.5 + idx * 0.5, audioCtx.currentTime);
         const lfoGain = audioCtx.createGain();
@@ -1342,22 +1327,6 @@
     function openGalleryModal() {
       showToast("Art gallery preview loaded: 24 traditional paintings available for view.");
     }
-
-    // Function to load the user's specific logo file from local storage or file input
-    function loadUserLogoFile(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const imgUrl = e.target.result;
-          document.getElementById('heroLogoImg').src = imgUrl;
-          document.getElementById('navLogoImg').src = imgUrl;
-          document.getElementById('footerLogoImg').src = imgUrl;
-          showToast("Logo updated successfully with your exact file!");
-        };
-        reader.readAsDataURL(file);
-      }
-    }
   </script>
 </body>
-  </html>
+</html>
